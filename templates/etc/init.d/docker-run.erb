@@ -57,28 +57,38 @@ fi
 start() {
     [ -x $docker ] || exit 5
 
-    if [ "true" = "$($docker inspect --format='{{.State.Running}}' <%= @sanitised_title %>)" ]; then
-       failure
-       printf "Container <%= @sanitised_title %> is still running.\n"
-       exit 7
+    if [ !($(docker inspect <%= @sanitised_title %> > /dev/null 2>&1)) ]; then
+      printf "Running $prog:\t"
+      <% if @pull_on_start -%>
+        $docker pull <%= @image %>
+      <% end -%>
+        $docker run \
+      <%= @docker_run_flags %> \
+        --name <%= @sanitised_title %> \
+      <% if @extra_parameters %><% @extra_parameters_array.each do |param| %>  \
+      <%= param %> <% end %> \
+      <% end -%> \
+      <%= @image %> \
+      <% if @command %> <%= @command %><% end %> 
+    fi 
+
+    retval=$?
+    echo
+    if [ $retval -eq 0 ]; then
+        success
+    else
+        failure
     fi
 
-    printf "Starting $prog:\t"
-    if [ "false" = "$($docker inspect --format='{{.State.Running}}' <%= @sanitised_title %>)" ]; then
-        $docker start <%= @sanitised_title %>
+    if [ "true" = "$($docker inspect --format='{{.State.Running}}' <%= @sanitised_title %>)" ]; then
+      failure
+      printf "Container <%= @sanitised_title %> is still running.\n"
+      exit 7
     else
-    <% if @pull_on_start -%>
-        $docker pull <%= @image %>
-    <% end -%>
-        $docker run \
-    <%= @docker_run_flags %> \
-    --name <%= @sanitised_title %> \
-    <% if @extra_parameters %><% @extra_parameters_array.each do |param| %>  \
-        <%= param %> <% end %> \
-    <% end -%> \
-    <%= @image %> \
-    <% if @command %> <%= @command %><% end %>
-
+        printf "Starting $prog:\t"
+        $docker start <%= @sanitised_title %>
+    fi
+    
     retval=$?
     echo
     if [ $retval -eq 0 ]; then
