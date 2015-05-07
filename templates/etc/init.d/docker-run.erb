@@ -72,14 +72,6 @@ start() {
       <% if @command %> <%= @command %><% end %> 
     fi 
 
-    retval=$?
-    echo
-    if [ $retval -eq 0 ]; then
-        success
-    else
-        failure
-    fi
-
     if [ "true" = "$($docker inspect --format='{{.State.Running}}' <%= @sanitised_title %>)" ]; then
       failure
       printf "Container <%= @sanitised_title %> is still running.\n"
