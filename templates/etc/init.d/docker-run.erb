@@ -64,10 +64,13 @@ start() {
     fi
 
     printf "Starting $prog:\t"
+    if [ "false" = "$($docker inspect --format='{{.State.Running}}' <%= @sanitised_title %>)" ]; then
+        $docker start <%= @sanitised_title %>
+    else
     <% if @pull_on_start -%>
         $docker pull <%= @image %>
     <% end -%>
-    $docker run \
+        $docker run \
     <%= @docker_run_flags %> \
     --name <%= @sanitised_title %> \
     <% if @extra_parameters %><% @extra_parameters_array.each do |param| %>  \
