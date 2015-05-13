@@ -24,6 +24,7 @@ class docker::params {
   $dm_fs                        = undef
   $dm_mkfsarg                   = undef
   $dm_mountopt                  = undef
+  $dm_blkdiscard                = true
   $dm_blocksize                 = undef
   $dm_loopdatasize              = undef
   $dm_loopmetadatasize          = undef

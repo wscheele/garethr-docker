@@ -104,6 +104,9 @@
 # [*dm_mountopt*]
 #   Specifies extra mount options used when mounting the thin devices.
 #
+# [*dm_blkdiscard*]
+#   Enables or disables the use of blkdiscard when removing devicemapper devices. This is enabled by default (only) if using loopback devices and is required to resparsify the loopback file on image/container removal.
+#
 # [*dm_blocksize*]
 #   A custom blocksize to use for the thin pool.
 #   Default blocksize is 64K.
@@ -170,6 +173,7 @@ class docker(
   $dm_fs                       = $docker::params::dm_fs,
   $dm_mkfsarg                  = $docker::params::dm_mkfsarg,
   $dm_mountopt                 = $docker::params::dm_mountopt,
+  $dm_blkdiscard               = $docker::params::dm_blkdiscard,
   $dm_blocksize                = $docker::params::dm_blocksize,
   $dm_loopdatasize             = $docker::params::dm_loopdatasize,
   $dm_loopmetadatasize         = $docker::params::dm_loopmetadatasize,
