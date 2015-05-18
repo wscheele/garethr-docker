@@ -70,12 +70,12 @@ start() {
       <%= @image %> \
       <% if @command %> <%= @command %><% end %> 
     retval=$?
-    echo
       if [ $retval -eq 0 ]; then
         success
       else
         failure
       fi
+    echo
     exit $retval
     fi 
 
@@ -84,23 +84,30 @@ start() {
       printf "Container <%= @sanitised_title %> is still running.\n"
       exit 7
     else
-      printf "Starting <%= @sanitised_title %>"
-        $docker start <%= @sanitised_title %>
+      printf "Starting <%= @sanitised_title %>\t"
+      $docker start <%= @sanitised_title %> > /dev/null
       retval=$?
-      echo
         if [ $retval -eq 0 ]; then
           success
         else
           failure
         fi
+      echo
       exit $retval
     fi
 }
 
 stop() {
-    echo -n "Stopping <%= @sanitised_title %>"
-    $docker stop <%= @sanitised_title %>
-    return $?
+    printf "Stopping <%= @sanitised_title %>\t"
+    $docker stop <%= @sanitised_title %> > /dev/null
+    retval=$?
+      if [ $retval -eq 0 ]; then
+        success
+      else
+        failure
+      fi
+    echo
+    exit $retval
 }
 
 clean() {
