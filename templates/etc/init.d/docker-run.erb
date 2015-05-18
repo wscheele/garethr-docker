@@ -56,8 +56,7 @@ fi
 
 start() {
     [ -x $docker ] || exit 5
-
-    if [ ! $(docker inspect <%= @sanitised_title %> > /dev/null 2>&1) ]; then
+    if docker inspect <%= @sanitised_title %> 2>&1 | grep -q "Error: No such image or container"; then
       printf "Running $prog:\t"
       <% if @pull_on_start -%>
         $docker pull <%= @image %>
