@@ -18,7 +18,7 @@
 #   If you want to add a docker image from specific docker file
 #
 # [*docker_tar*]
-#   If you want to load a docker image from specific docker tar 
+#   If you want to load a docker image from specific docker tar
 #
 define docker::image(
   $ensure    = 'present',
@@ -86,11 +86,18 @@ define docker::image(
       timeout     => 0,
     }
   } else {
+    exec { "check_image_${image}_install":
+      command => 'echo > /dev/null',
+      path    => ['/bin', '/usr/bin'],
+      unless  => $image_find,
+      notify  => Exec[$image_install],
+    }
+
     exec { $image_install:
       environment => 'HOME=/root',
       path        => ['/bin', '/usr/bin'],
-      unless      => $image_find,
       timeout     => 0,
+      refreshonly => true,
     }
   }
 }
