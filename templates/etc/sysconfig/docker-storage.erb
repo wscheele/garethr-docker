@@ -21,7 +21,6 @@ DOCKER_STORAGE_OPTIONS="<% -%>
 <% if @dm_fs %> --storage-opt dm.fs=<%= @dm_fs %><% end -%>
 <% if @dm_mkfsarg %> --storage-opt "dm.mkfsarg=<%= @dm_mkfsarg %>"<% end -%>
 <% if @dm_mountopt %> --storage-opt dm.mountopt=<%= @dm_mountopt %><% end -%>
-<% if @dm_blkdiscard %> --storage-opt dm.blkdiscard=<%= @dm_blkdiscard %><% end -%>
 <% if @dm_blocksize %> --storage-opt dm.blocksize=<%= @dm_blocksize %><% end -%>
 <% if @dm_loopdatasize %> --storage-opt dm.loopdatasize=<%= @dm_loopdatasize %><% end -%>
 <% if @dm_loopmetadatasize %> --storage-opt dm.loopmetadatasize=<%= @dm_loopmetadatasize %><% end -%>
