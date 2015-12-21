@@ -168,6 +168,7 @@
 #   A custom blockdevice to use for data for the thin pool.
 #
 # [*dm_metadatadev*]
+#   (deprecated - dm_thinpooldev should be used going forward)
 #   A custom blockdevice to use for metadata for the thin pool.
 #
 # [*dm_thinpooldev*]
@@ -294,7 +295,7 @@ class docker(
   $storage_auto_extend_pool          = $docker::params::storage_auto_extend_pool,
   $storage_pool_autoextend_threshold = $docker::params::storage_pool_autoextend_threshold,
   $storage_pool_autoextend_percent   = $docker::params::storage_pool_autoextend_percent,
-  ) inherits docker::params {
+) inherits docker::params {
 
   validate_string($version)
   validate_re($::osfamily, '^(Debian|RedHat|Archlinux)$', 'This module only works on Debian and Red Hat based systems.')

@@ -80,6 +80,7 @@ define docker::run(
   $hostentries = [],
   $restart = undef,
   $before_stop = false,
+  $persistent_container = false,
 ) {
   include docker::params
   $docker_command = $docker::params::docker_command

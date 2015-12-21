@@ -12,8 +12,10 @@ StartLimitInterval=20
 StartLimitBurst=5
 TimeoutStartSec=0
 Environment="HOME=/root"
+<% if not @persistent_container %>
 ExecStartPre=-/usr/bin/<%= @docker_command %> kill <%= @sanitised_title %>
 ExecStartPre=-/usr/bin/<%= @docker_command %> rm <%= @sanitised_title %>
+<% end %> 
 <% @extra_systemd_parameters.each do |key, value| -%><%= key %>=<%= value %>
 <% end -%>
 <%- if @pull_on_start %>ExecStartPre=-/usr/bin/<%= @docker_command %> pull <%= @image %>
