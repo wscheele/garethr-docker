@@ -204,7 +204,6 @@ class docker::service (
     hasstatus  => $hasstatus,
     hasrestart => $hasrestart,
     provider   => $provider,
-    require    => Exec['docker-systemd-reload'],
   }
 
 }
