@@ -7,5 +7,6 @@ class docker::systemd_reload {
     path        => ['/bin/', '/sbin/', '/usr/bin/', '/usr/sbin/'],
     command     => 'systemctl daemon-reload',
     refreshonly => true,
+    before => Service['docker'],
   }
 }
