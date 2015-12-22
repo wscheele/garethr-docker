@@ -1,4 +1,4 @@
-# == Class: docker::systemd_reload
+# == Class: docker::systemd_reload_before_service
 #
 # For systems that have systemd
 #
