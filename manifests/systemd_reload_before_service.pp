@@ -9,5 +9,6 @@ class docker::systemd_reload_before_service {
     path        => ['/bin/', '/sbin/', '/usr/bin/', '/usr/sbin/'],
     command     => 'systemctl daemon-reload',
     before => Service['docker'],
+    unless => 'systemctl status docker'
   }
 }
